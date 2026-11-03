@@ -51,7 +51,7 @@ dotdrawer's `netlify.toml`, from [PR #11](https://github.com/schalkneethling/dot
   ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- . ../netlify.toml"
 ```
 
-Netlify still finds a `netlify.toml` that sits at the root: it looks in the package directory, then the base directory, then the root ([Monorepos › How Netlify finds your configuration files](https://docs.netlify.com/build/configure-builds/monorepos/)). The website's folder has no `netlify.toml` of its own, so the root one applies.
+Netlify still finds a `netlify.toml` that sits at the root. With no package directory set, as here, it looks in the base directory and then the root ([Configure builds › Set the package directory](https://docs.netlify.com/build/configure-builds/overview/)). Only a site that sets a package directory, which is a monorepo setting, has Netlify look there first ([Monorepos › How Netlify finds your configuration files](https://docs.netlify.com/build/configure-builds/monorepos/)). The website's folder has no `netlify.toml` of its own, so the root one applies.
 
 ### Checking it
 
