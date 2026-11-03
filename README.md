@@ -16,3 +16,7 @@ Each problem is one Markdown file, in a folder for its topic. An entry is added 
 ### Dependabot
 
 - [A Dependabot pull request fails because a generated file is out of date](dependabot/generated-file-out-of-date.md): a dependency update changes a file that a tool generates, such as `worker-configuration.d.ts`, and Dependabot can't regenerate it.
+
+### Netlify
+
+- [A Netlify deploy fails because Netlify installs Swift for the repository's Package.swift](netlify/swift-installed-for-root-package-swift.md): a static website shares its repository with a Swift package, and Netlify tries to install Swift because the base directory is the repository root.
