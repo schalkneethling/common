@@ -27,4 +27,4 @@ Each problem is one Markdown file, in a folder for its topic. An entry is added 
 
 ### Vite+
 
-- [A Dependabot update of vite-plus leaves the `vite` alias behind](vite-plus/vite-alias-out-of-step.md): Dependabot moves `vite-plus` but not the `vite` alias to `@voidzero-dev/vite-plus-core`, so two copies of Vite are installed, and the build or the type check fails late. A check that runs before the install fails first and names the line to set.
+- [A Dependabot update of vite-plus leaves the `vite` alias behind](vite-plus/vite-alias-out-of-step.md): Dependabot moves `vite-plus` but not the `vite` alias to `@voidzero-dev/vite-plus-core`, so two copies of Vite are installed, and the build or the type check can fail late. A check that runs before the install fails first and names the line to set.

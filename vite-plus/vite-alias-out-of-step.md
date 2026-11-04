@@ -17,7 +17,7 @@ catalog:
 "overrides": { "vite": "npm:@voidzero-dev/vite-plus-core@1.1.0" }
 ```
 
-Dependabot updates `vite-plus` and leaves the alias at the old version, so the install puts two copies of Vite in `node_modules`. What fails next depends on the project, and it fails late, in a step whose error doesn't point at the alias.
+Dependabot updates `vite-plus` and leaves the alias at the old version, so the install puts two copies of Vite in `node_modules`. What fails next depends on the project, and when something fails, it fails late, in a step whose error doesn't point at the alias.
 
 In decision-machines-3000, an npm project, the build failed:
 
@@ -48,7 +48,7 @@ A mismatch doesn't always fail at all. Haystack's first one, in [PR #51](https:/
   npx --package=vite-plus@1.4.0 vp migrate --no-interactive
   ```
 
-- **A workflow that commits the fix needs care.** It would install the new, not yet reviewed release while holding a token that can write. And a commit made with the workflow's `GITHUB_TOKEN` starts the pull request's next CI run only after someone approves it. The [generated-file entry](../dependabot/generated-file-out-of-date.md) shows how to build such a workflow safely. Both projects chose a check instead, because the fix is one line and the check needs no write token.
+- **A workflow that commits the fix needs care.** It would install the new, not yet reviewed release while holding a token that can write. And a commit made with the workflow's `GITHUB_TOKEN` doesn't start a normal CI run: `pull_request` CI waits for someone to approve it, and CI that runs only on `push` doesn't run on that commit at all. The [generated-file entry](../dependabot/generated-file-out-of-date.md) shows how to build such a workflow safely. decision-machines-3000 chose a check instead, and Haystack proposes the same, because the fix is one line and the check needs no write token.
 
 Vite+ tracks the problem in [voidzero-dev/vite-plus#2356](https://github.com/voidzero-dev/vite-plus/issues/2356), mainly for Renovate. It proposes a Renovate preset, and a guard inside `vp` that warns or fails when the installed `vite-plus-core` differs from the CLI's version. Neither existed on 4 November 2026, when the issue was still open.
 
@@ -63,7 +63,7 @@ setup-vp (run-install: false)  →  node scripts/check-vite-alias.ts  →  vp in
 
 The code to reuse:
 
-- **npm `package.json`:** decision-machines-3000's [`scripts/check-vite-alias.ts`](https://github.com/schalkneethling/decision-machines-3000/blob/91fdae64ed5d4de41c6b5a14bba8f7de8bf102a4/scripts/check-vite-alias.ts), which checks the alias in both `devDependencies` and `overrides`. It was merged in [PR #87](https://github.com/schalkneethling/decision-machines-3000/pull/87).
+- **npm `package.json`:** decision-machines-3000's [`scripts/check-vite-alias.ts`](https://github.com/schalkneethling/decision-machines-3000/blob/91fdae64ed5d4de41c6b5a14bba8f7de8bf102a4/scripts/check-vite-alias.ts), which checks the alias in both `devDependencies` and `overrides`. It supports only that layout: it reads `vite-plus` and `vite` from `devDependencies`, and `vite` from `overrides`, so a project that declares them anywhere else, such as only in `overrides` or under `dependencies`, fails with a "no vite entry" message until the script is adapted. It was merged in [PR #87](https://github.com/schalkneethling/decision-machines-3000/pull/87).
 - **pnpm catalog:** Haystack's [`scripts/check-vite-alias.ts`](https://github.com/schalkneethling/haystack/blob/aed99bc621357327fe63fb4f9eb3a22f44b89a44/scripts/check-vite-alias.ts), its [tests](https://github.com/schalkneethling/haystack/blob/aed99bc621357327fe63fb4f9eb3a22f44b89a44/scripts/check-vite-alias.test.ts), and the [Quality workflow](https://github.com/schalkneethling/haystack/blob/aed99bc621357327fe63fb4f9eb3a22f44b89a44/.github/workflows/quality.yml) that runs it. It is a port of the npm version, proposed in [PR #269](https://github.com/schalkneethling/haystack/pull/269), which was still open when this entry was written. Its CI passes on a matching catalog, but no real Dependabot mismatch has run through it yet.
 
 The design choices that matter:

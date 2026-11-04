@@ -50,4 +50,4 @@ Two things to know when using it:
 ## Where it came up
 
 - **Haystack:** [PR #109](https://github.com/schalkneethling/haystack/pull/109) failed on a Wrangler update. [Issue #9](https://github.com/schalkneethling/haystack/issues/9) records the decision to automate and document, and [PR #145](https://github.com/schalkneethling/haystack/pull/145) added the workflow, with its security review. The workflow's first real run regenerated #109's types, and the next CI run passed.
-- **Another project:** the vite-plus `vite` alias, described above. The same kind of workflow could fix it, with moving the alias as the step the first job runs. The projects chose a check that fails first instead, which [its entry](../vite-plus/vite-alias-out-of-step.md) describes.
+- **Another project:** the vite-plus `vite` alias, described above. The same kind of workflow could fix it, with moving the alias as the step the first job runs. decision-machines-3000 added a check that fails first instead, and Haystack has proposed a port of it, which no real Dependabot mismatch has run through yet. [Its entry](../vite-plus/vite-alias-out-of-step.md) describes both.
