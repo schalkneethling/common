@@ -16,7 +16,7 @@ The check is doing its job, because it catches a committed file that no longer m
 
 Dependabot updates the version numbers in the manifest and the lockfile. It doesn't run the project's own commands, such as a code generator, so no Dependabot setting can make it regenerate the file. A group only decides which packages update together. In the Haystack case, the group that keeps `wrangler` and `@cloudflare/vite-plugin` in step was already there, and the types still failed.
 
-The same shape came up in another project: vite-plus needs its `vite` alias moved in step, and Dependabot never moves it, so every vite-plus pull request failed its build until someone moved the alias by hand. A group couldn't fix that either.
+The same shape came up in another project: vite-plus needs its `vite` alias moved in step, and Dependabot never moves it, so every vite-plus pull request could fail late, in the build or the type check, until someone moved the alias by hand. A group couldn't fix that either. That problem now has [its own entry](../vite-plus/vite-alias-out-of-step.md).
 
 ## The solution: regenerate the file in a workflow, and document the manual steps
 
@@ -50,4 +50,4 @@ Two things to know when using it:
 ## Where it came up
 
 - **Haystack:** [PR #109](https://github.com/schalkneethling/haystack/pull/109) failed on a Wrangler update. [Issue #9](https://github.com/schalkneethling/haystack/issues/9) records the decision to automate and document, and [PR #145](https://github.com/schalkneethling/haystack/pull/145) added the workflow, with its security review. The workflow's first real run regenerated #109's types, and the next CI run passed.
-- **Another project:** the vite-plus `vite` alias, described above. The same kind of workflow could fix it, with moving the alias as the step the first job runs.
+- **Another project:** the vite-plus `vite` alias, described above. The same kind of workflow could fix it, with moving the alias as the step the first job runs. The projects chose a check that fails first instead, which [its entry](../vite-plus/vite-alias-out-of-step.md) describes.

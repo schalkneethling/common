@@ -24,3 +24,7 @@ Each problem is one Markdown file, in a folder for its topic. An entry is added 
 ### pnpm
 
 - [pnpm warns that `_auth` can't be set in the global config file](pnpm/global-auth-setting-ignored.md): a project pins a pnpm older than 11.10.0, which doesn't know the `_auth` credentials that `pnpm login` writes to the global `config.yaml` in pnpm 12.1.0 up to 12.16.0.
+
+### Vite+
+
+- [A Dependabot update of vite-plus leaves the `vite` alias behind](vite-plus/vite-alias-out-of-step.md): Dependabot moves `vite-plus` but not the `vite` alias to `@voidzero-dev/vite-plus-core`, so two copies of Vite are installed, and the build or the type check fails late. A check that runs before the install fails first and names the line to set.
