@@ -20,3 +20,7 @@ Each problem is one Markdown file, in a folder for its topic. An entry is added 
 ### Netlify
 
 - [A Netlify deploy fails because Netlify installs Swift for the repository's Package.swift](netlify/swift-installed-for-root-package-swift.md): a static website shares its repository with a Swift package, and Netlify tries to install Swift because the base directory is the repository root.
+
+### pnpm
+
+- [pnpm warns that `_auth` can't be set in the global config file](pnpm/global-auth-setting-ignored.md): a project pins a pnpm older than 11.10.0, which doesn't know the `_auth` credentials that `pnpm login` writes to the global `config.yaml` in pnpm 12.1.0 up to 12.16.0.
