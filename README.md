@@ -16,6 +16,7 @@ Each problem is one Markdown file, in a folder for its topic. An entry is added 
 ### Dependabot
 
 - [A Dependabot pull request fails because a generated file is out of date](dependabot/generated-file-out-of-date.md): a dependency update changes a file that a tool generates, such as `worker-configuration.d.ts`, and Dependabot can't regenerate it.
+- [A Dependabot security update for a uv project locks a development pre-release](dependabot/uv-security-update-locks-pre-release.md): Dependabot moves a package such as `langgraph-cli` to a `.devN` release although stable fixes exist; close it, regenerate `uv.lock` with `uv lock -P`, and use a current uv so the lock's `revision` isn't downgraded.
 
 ### Netlify
 
